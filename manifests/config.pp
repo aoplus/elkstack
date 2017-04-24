@@ -24,7 +24,7 @@ class elkstack::config (
     notify => Service['kibana'],
   }
 
-  $kibana_config.each() |String $line| {
+  $kibana_config.each() |$line| {
     file_line { $line:
       ensure => present,
       line   => $line,
@@ -32,7 +32,7 @@ class elkstack::config (
       notify => Service['kibana'],
     }
   }
-  $es_config.each() |String $line| {
+  $es_config.each() |$line| {
     file_line { $line:
       ensure => present,
       line   => $line,
