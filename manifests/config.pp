@@ -24,7 +24,7 @@ class elkstack::config (
     notify => Service['kibana'],
   }
 
-  $kibana_config.each |String $line| {
+  $kibana_config.each() |String $line| {
     file_line { $line:
       ensure => present,
       line   => $line,
@@ -32,7 +32,7 @@ class elkstack::config (
       notify => Service['kibana'],
     }
   }
-  $es_config.each |String $line| {
+  $es_config.each() |String $line| {
     file_line { $line:
       ensure => present,
       line   => $line,
@@ -41,7 +41,7 @@ class elkstack::config (
     }
   }
   if ($logstash_config_input != '') {
-    $logstash_config_input.each |$conf_file, $contents| {
+    $logstash_config_input.each() |$conf_file, $contents| {
       file { "/etc/logstash/conf.d/${conf_file}-input.conf":
         ensure  => present,
         content => template('elkstack/logstash.input.conf.erb'),
@@ -49,7 +49,7 @@ class elkstack::config (
     }
   }
   if ($logstash_config_output != '') {
-    $logstash_config_output.each |$conf_file, $contents| {
+    $logstash_config_output.each() |$conf_file, $contents| {
       file { "/etc/logstash/conf.d/${conf_file}-output.conf":
         ensure  => present,
         content => template('elkstack/logstash.output.conf.erb'),
